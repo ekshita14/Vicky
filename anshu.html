@@ -22,6 +22,7 @@
             --sky-blue: #87CEEB;
             --white: #FFFFFF;
             --light-brown: #D2B48C;
+            --heart-color: #ff5a7d;
         }
 
         body {
@@ -30,20 +31,24 @@
             overflow-x: hidden;
             min-height: 100vh;
             position: relative;
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* Page Container */
         .page {
             width: 100vw;
-            height: 100vh;
-            display: flex;
+            min-height: 100vh;
+            display: none;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             padding: 20px;
             position: relative;
-            overflow: hidden;
-            transition: transform 0.8s ease;
+            overflow-y: auto;
+        }
+
+        .page.active {
+            display: flex;
         }
 
         /* Navigation */
@@ -70,11 +75,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-        }
-
-        .nav-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(123, 63, 179, 0.5);
+            -webkit-tap-highlight-color: transparent;
         }
 
         .nav-btn:disabled {
@@ -104,6 +105,7 @@
         /* Page 1: Opening */
         #page1 {
             background: linear-gradient(135deg, var(--sunshine), #FFD166);
+            justify-content: center;
         }
 
         .lantern {
@@ -115,27 +117,6 @@
             opacity: 0.7;
             animation: float 20s infinite linear;
             z-index: 1;
-        }
-
-        .lantern:after {
-            content: '';
-            position: absolute;
-            width: 30px;
-            height: 10px;
-            background-color: var(--light-brown);
-            border-radius: 5px;
-            bottom: -10px;
-            left: 5px;
-        }
-
-        .lantern:before {
-            content: '';
-            position: absolute;
-            width: 10px;
-            height: 20px;
-            background-color: var(--gold);
-            top: -20px;
-            left: 15px;
         }
 
         @keyframes float {
@@ -184,18 +165,12 @@
             transition: all 0.3s ease;
             box-shadow: 0 8px 20px rgba(123, 63, 179, 0.4);
             display: inline-block;
-        }
-
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(123, 63, 179, 0.5);
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* Page 2: Cake */
         #page2 {
-            background: linear-gradient(135deg, #FFD6E0, var(--pink));
-            display: flex;
-            flex-direction: column;
+            background: linear-gradient(135deg, var(--light-purple), #D9B8FF);
             justify-content: center;
         }
 
@@ -224,7 +199,7 @@
             top: 50%;
             transform: translate(-50%, -50%);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            cursor: crosshair;
+            cursor: pointer;
         }
 
         .cake-top {
@@ -273,7 +248,7 @@
             left: 0;
             top: 0;
             z-index: 20;
-            cursor: crosshair;
+            cursor: pointer;
         }
 
         .wish-instruction {
@@ -313,16 +288,12 @@
             flex-direction: column;
         }
 
-        .memory-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-
         .memory-img {
             width: 100%;
             height: 200px;
             object-fit: cover;
             border-bottom: 5px solid var(--gold);
+            background: linear-gradient(135deg, var(--light-purple), var(--purple));
         }
 
         .memory-content {
@@ -351,6 +322,7 @@
             background: linear-gradient(135deg, #E6D4FF, var(--light-purple));
             justify-content: flex-start;
             padding-top: 100px;
+            padding-bottom: 150px;
         }
 
         .flip-cards-container {
@@ -360,6 +332,7 @@
             gap: 30px;
             max-width: 1200px;
             margin-top: 30px;
+            width: 100%;
         }
 
         .flip-card {
@@ -367,6 +340,8 @@
             height: 380px;
             perspective: 1000px;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            margin: 10px;
         }
 
         .flip-card-inner {
@@ -378,6 +353,8 @@
             transform-style: preserve-3d;
             border-radius: 20px;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
         }
 
         .flip-card.flipped .flip-card-inner {
@@ -392,6 +369,8 @@
             backface-visibility: hidden;
             border-radius: 20px;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .flip-card-front {
@@ -403,8 +382,6 @@
             background: linear-gradient(135deg, var(--white), var(--sunshine));
             color: var(--purple);
             transform: rotateY(180deg);
-            display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 25px;
@@ -416,12 +393,20 @@
             height: 240px;
             object-fit: cover;
             border-bottom: 5px solid var(--gold);
+            background: linear-gradient(135deg, var(--purple), var(--light-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
         }
 
         .flip-card-title {
             font-size: 1.5rem;
             margin: 20px 0 15px;
             color: var(--purple);
+            padding: 0 15px;
         }
 
         .flip-card-message {
@@ -429,13 +414,15 @@
             line-height: 1.5;
             color: var(--light-purple);
             padding: 0 15px;
+            margin-bottom: 15px;
         }
 
         .flip-instruction {
             font-size: 0.9rem;
             color: #888;
-            margin-top: 15px;
+            margin-top: 10px;
             font-style: italic;
+            padding: 0 15px 15px;
         }
 
         /* Page 5: Letter Page */
@@ -444,6 +431,7 @@
             justify-content: flex-start;
             padding-top: 100px;
             text-align: center;
+            padding-bottom: 150px;
         }
 
         .letter-container {
@@ -515,28 +503,6 @@
             }
         }
 
-        /* Letter image at bottom right */
-        .letter-image {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            width: 180px;
-            height: 120px;
-            border-radius: 10px;
-            border: 3px solid var(--gold);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            object-fit: cover;
-            z-index: 5;
-            opacity: 0;
-            animation: fadeInLetterImage 2s ease 18s forwards;
-        }
-
-        @keyframes fadeInLetterImage {
-            to {
-                opacity: 0.9;
-            }
-        }
-
         /* Virtual Hug Button */
         .virtual-hug-btn {
             background: linear-gradient(to right, var(--pink), #FF8BA0);
@@ -550,11 +516,7 @@
             transition: all 0.3s ease;
             box-shadow: 0 8px 20px rgba(255, 107, 139, 0.4);
             display: inline-block;
-        }
-
-        .virtual-hug-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(255, 107, 139, 0.5);
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* Seal Letter Button */
@@ -570,113 +532,7 @@
             transition: all 0.3s ease;
             box-shadow: 0 8px 20px rgba(123, 63, 179, 0.4);
             display: none;
-        }
-
-        .seal-letter-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(123, 63, 179, 0.5);
-        }
-
-        /* Hug Animation */
-        .hug-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s ease;
-        }
-
-        .hug-animation.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .hug-icon {
-            font-size: 8rem;
-            color: var(--pink);
-            margin-bottom: 30px;
-            animation: hugPulse 1.5s infinite;
-        }
-
-        @keyframes hugPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-
-        .hug-message {
-            color: white;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        /* Final Seal Popup */
-        .seal-popup {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 3000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s ease;
-        }
-
-        .seal-popup.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .seal-animation {
-            font-size: 8rem;
-            color: var(--gold);
-            margin-bottom: 30px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .seal-message {
-            color: white;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .restart-btn {
-            background: linear-gradient(to right, var(--gold), #FFA500);
-            color: var(--purple);
-            border: none;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 1.3rem;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
-        }
-
-        .restart-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.5);
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* Progress Bar */
@@ -698,7 +554,126 @@
             border-radius: 5px;
         }
 
-        /* Wish Popup (New) */
+        /* Beating Heart Animation */
+        .heart-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 30px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .beating-heart {
+            width: 120px;
+            height: 120px;
+            background-color: var(--heart-color);
+            position: relative;
+            transform: rotate(45deg);
+            animation: heartbeat 1.2s infinite ease-in-out;
+            box-shadow: 0 0 20px rgba(255, 90, 125, 0.5);
+            z-index: 2;
+        }
+
+        .beating-heart:before,
+        .beating-heart:after {
+            content: "";
+            width: 120px;
+            height: 120px;
+            background-color: var(--heart-color);
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .beating-heart:before {
+            top: -60px;
+            left: 0;
+        }
+
+        .beating-heart:after {
+            top: 0;
+            left: -60px;
+        }
+
+        @keyframes heartbeat {
+            0%, 50%, 100% { 
+                transform: rotate(45deg) scale(1); 
+            }
+            10% { 
+                transform: rotate(45deg) scale(1.1); 
+            }
+            15% { 
+                transform: rotate(45deg) scale(1.15); 
+            }
+            20% { 
+                transform: rotate(45deg) scale(1.1); 
+            }
+            25% { 
+                transform: rotate(45deg) scale(1.2); 
+            }
+            30% { 
+                transform: rotate(45deg) scale(1.1); 
+            }
+        }
+
+        .heart-pulse {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border: 3px solid rgba(255, 90, 125, 0.5);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            z-index: 1;
+        }
+
+        .heart-pulse:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .heart-pulse:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.7;
+                border-width: 3px;
+            }
+            100% {
+                transform: scale(1.8);
+                opacity: 0;
+                border-width: 1px;
+            }
+        }
+
+        .heart-glow {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(255, 90, 125, 0.2) 0%, rgba(255, 90, 125, 0) 70%);
+            border-radius: 50%;
+            animation: glow 3s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        /* Floating Hearts */
+        .floating-heart {
+            position: fixed;
+            font-size: 2rem;
+            z-index: 9999;
+            pointer-events: none;
+            user-select: none;
+            opacity: 1;
+        }
+
+        /* Wish Popup */
         .wish-popup {
             position: fixed;
             top: 0;
@@ -739,30 +714,6 @@
             transform: translateY(0);
         }
 
-        .wish-popup-content:before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: linear-gradient(45deg, var(--purple), var(--light-purple), var(--pink), var(--gold));
-            z-index: -1;
-            border-radius: 35px;
-            animation: borderGlow 3s infinite alternate;
-        }
-
-        @keyframes borderGlow {
-            0% {
-                opacity: 0.7;
-                filter: hue-rotate(0deg);
-            }
-            100% {
-                opacity: 1;
-                filter: hue-rotate(360deg);
-            }
-        }
-
         .wish-popup-title {
             font-size: 2.8rem;
             color: var(--purple);
@@ -777,36 +728,164 @@
             line-height: 1.6;
         }
 
-        .wish-confetti {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background-color: var(--pink);
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: confettiFall 3s linear infinite;
+        /* Virtual Hug Popup */
+        .hug-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
         }
 
-        @keyframes confettiFall {
-            0% {
-                transform: translateY(-100px) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
+        .hug-popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .hug-popup-content {
+            background: white;
+            padding: 50px;
+            border-radius: 25px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            border: 8px solid var(--gold);
+            transform: translateY(30px);
+            transition: transform 0.5s ease;
+            text-align: center;
+        }
+
+        .hug-popup.active .hug-popup-content {
+            transform: translateY(0);
+        }
+
+        .hug-popup-title {
+            font-size: 2.8rem;
+            color: var(--purple);
+            margin-bottom: 20px;
+        }
+
+        .hug-popup-subtitle {
+            font-size: 1.8rem;
+            color: var(--light-purple);
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .hug-popup-message {
+            font-size: 1.3rem;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .hug-popup-divider {
+            height: 2px;
+            background: linear-gradient(to right, var(--gold), var(--light-purple));
+            margin: 30px 0;
+            border: none;
+        }
+
+        .hug-popup-footer {
+            font-size: 1.5rem;
+            color: var(--purple);
+            font-weight: bold;
+            margin-top: 30px;
+        }
+
+        /* Seal Popup */
+        .seal-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .seal-popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .seal-popup-content {
+            background: white;
+            padding: 50px;
+            border-radius: 25px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            border: 8px solid var(--gold);
+            transform: translateY(30px);
+            transition: transform 0.5s ease;
+            text-align: center;
+        }
+
+        .seal-popup.active .seal-popup-content {
+            transform: translateY(0);
+        }
+
+        .seal-popup-title {
+            font-size: 2.8rem;
+            color: var(--purple);
+            margin-bottom: 20px;
+        }
+
+        .seal-popup-subtitle {
+            font-size: 1.8rem;
+            color: var(--light-purple);
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .seal-popup-message {
+            font-size: 1.3rem;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .seal-popup-divider {
+            height: 2px;
+            background: linear-gradient(to right, var(--gold), var(--light-purple));
+            margin: 30px 0;
+            border: none;
+        }
+
+        .seal-popup-footer {
+            font-size: 1.5rem;
+            color: var(--purple);
+            font-weight: bold;
+            margin-top: 30px;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
             .page {
                 padding: 15px;
+                padding-top: 80px;
+                padding-bottom: 120px;
                 height: auto;
                 min-height: 100vh;
-                justify-content: flex-start;
-                padding-top: 100px;
-                padding-bottom: 120px;
             }
             
             h1 {
@@ -815,6 +894,7 @@
             
             .page-title {
                 font-size: 2rem;
+                margin-top: 20px;
             }
             
             .cake {
@@ -827,20 +907,52 @@
                 height: 40px;
             }
             
-            .memories-container,
+            #page4 {
+                padding-top: 80px;
+                padding-bottom: 120px;
+            }
+            
             .flip-cards-container {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                padding: 0 10px;
+            }
+            
+            .flip-card {
+                width: 100%;
+                max-width: 350px;
+                height: 450px;
+                margin: 15px 0;
+            }
+            
+            .flip-card-img {
+                height: 280px;
+            }
+            
+            .flip-card-title {
+                font-size: 1.8rem;
+                margin: 15px 0 10px;
+            }
+            
+            .flip-card-message {
+                font-size: 1.2rem;
+                line-height: 1.6;
+            }
+            
+            .memories-container {
                 flex-direction: column;
                 align-items: center;
             }
             
-            .memory-card,
-            .flip-card {
-                width: 90%;
+            .memory-card {
+                width: 100%;
                 max-width: 350px;
             }
             
             .letter-container {
                 padding: 20px;
+                height: 60vh;
             }
             
             .letter-title {
@@ -851,22 +963,19 @@
                 font-size: 1.1rem;
             }
             
-            .letter-image {
-                width: 120px;
-                height: 80px;
-                bottom: 15px;
-                right: 15px;
-            }
-            
             .nav-buttons {
                 bottom: 20px;
                 flex-wrap: wrap;
                 justify-content: center;
+                width: 90%;
             }
             
             .nav-btn {
-                padding: 10px 20px;
+                padding: 12px 20px;
                 font-size: 1rem;
+                flex: 1;
+                min-width: 140px;
+                justify-content: center;
             }
             
             .page-indicator {
@@ -875,16 +984,100 @@
                 font-size: 0.8rem;
             }
             
-            .wish-popup-content {
+            .wish-popup-content,
+            .hug-popup-content,
+            .seal-popup-content {
                 padding: 30px;
                 margin: 20px;
             }
             
-            .wish-popup-title {
+            .wish-popup-title,
+            .hug-popup-title,
+            .seal-popup-title {
                 font-size: 2.2rem;
             }
             
             .wish-popup-message {
+                font-size: 1.3rem;
+            }
+            
+            .hug-popup-subtitle,
+            .seal-popup-subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .hug-popup-message,
+            .seal-popup-message {
+                font-size: 1.1rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+                padding: 0 10px;
+                text-align: center;
+            }
+            
+            .heart-container {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .beating-heart {
+                width: 90px;
+                height: 90px;
+            }
+            
+            .beating-heart:before,
+            .beating-heart:after {
+                width: 90px;
+                height: 90px;
+            }
+            
+            .beating-heart:before {
+                top: -45px;
+            }
+            
+            .beating-heart:after {
+                left: -45px;
+            }
+            
+            .heart-pulse {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .heart-glow {
+                width: 140px;
+                height: 140px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .flip-card {
+                height: 420px;
+            }
+            
+            .flip-card-img {
+                height: 250px;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+                padding: 0 10px;
+            }
+            
+            .nav-btn {
+                min-width: 120px;
+                padding: 10px 15px;
+            }
+            
+            .hug-popup-title,
+            .seal-popup-title {
+                font-size: 2rem;
+            }
+            
+            .hug-popup-subtitle,
+            .seal-popup-subtitle {
                 font-size: 1.3rem;
             }
         }
@@ -908,9 +1101,6 @@
 
     <!-- Page 1: Opening -->
     <div class="page active" id="page1">
-        <!-- Floating lanterns -->
-        <div id="lanterns-container"></div>
-        
         <div class="welcome-box">
             <h1><i class="fas fa-crown"></i> Happy Birthday, Vicky! <i class="fas fa-crown"></i></h1>
             <p class="subtitle">A Tangled-themed magical adventure awaits you on your special day!</p>
@@ -955,7 +1145,9 @@
         <div class="memories-container">
             <!-- Memory 1 -->
             <div class="memory-card">
-                <img src="img3.jpeg" alt="anshu" class="memory-img">
+                <div class="memory-img" style="display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: bold;">
+                    Lanterns in the Sky
+                </div>
                 <div class="memory-content">
                     <h3 class="memory-title">Lanterns in the Sky</h3>
                     <p class="memory-description">Just like Rapunzel's lantern scene, you light up every moment with your presence. This memory reminds me of your radiant spirit.</p>
@@ -964,7 +1156,9 @@
             
             <!-- Memory 2 -->
             <div class="memory-card">
-                <img src="img4.jpeg" alt="anshu" class="memory-img">
+                <div class="memory-img" style="display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: bold; background: linear-gradient(135deg, var(--gold), #FFA500);">
+                    Magical Golden Flower
+                </div>
                 <div class="memory-content">
                     <h3 class="memory-title">Magical Golden Flower</h3>
                     <p class="memory-description">Like the magical flower in Tangled, you have a healing and uplifting presence that makes everything better.</p>
@@ -973,7 +1167,9 @@
             
             <!-- Memory 3 -->
             <div class="memory-card">
-                <img src="img2.jpeg" alt="anshu" class="memory-img">
+                <div class="memory-img" style="display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: bold; background: linear-gradient(135deg, var(--purple), #5a2a8c);">
+                    Starry Night Dreams
+                </div>
                 <div class="memory-content">
                     <h3 class="memory-title">Starry Night Dreams</h3>
                     <p class="memory-description">Your dreams are as vast as this starry sky. Never stop reaching for them, just like Rapunzel reached for her dreams.</p>
@@ -987,19 +1183,21 @@
         <h2 class="page-title"><i class="fas fa-gift"></i> Birthday Messages <i class="fas fa-gift"></i></h2>
         <p class="subtitle">Click on each card to flip it and reveal a special message!</p>
         
-        <div class="flip-cards-container">
+        <div class="flip-cards-container" id="flipCardsContainer">
             <!-- Flip Card 1 -->
             <div class="flip-card" id="flipCard1">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <img src="https://i.pinimg.com/736x/11/52/d7/1152d7bdf149deac7d44745c2965bc23.jpg" alt="Rapunzel with lantern" class="flip-card-img">
+                        <div class="flip-card-img" style="background: linear-gradient(135deg, #7B3FB3, #B57EDC);">
+                            Message #1
+                        </div>
                         <h3 class="flip-card-title">Message #1</h3>
-                        <p class="flip-instruction">Click to flip and reveal message</p>
+                        <p class="flip-instruction">Tap to flip and reveal message</p>
                     </div>
                     <div class="flip-card-back">
                         <h3 class="flip-card-title">A Special Message</h3>
                         <p class="flip-card-message">Vicky, just like Rapunzel watching the lanterns, may your life be filled with magical moments that take your breath away!</p>
-                        <p class="flip-instruction">Click again to flip back</p>
+                        <p class="flip-instruction">Tap again to flip back</p>
                     </div>
                 </div>
             </div>
@@ -1008,14 +1206,16 @@
             <div class="flip-card" id="flipCard2">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <img src="https://wallpapercave.com/wp/wp2646138.jpg" alt="Tangled Wallpaper" class="flip-card-img">
+                        <div class="flip-card-img" style="background: linear-gradient(135deg, #B57EDC, #FFB6C1);">
+                            Message #2
+                        </div>
                         <h3 class="flip-card-title">Message #2</h3>
-                        <p class="flip-instruction">Click to flip and reveal message</p>
+                        <p class="flip-instruction">Tap to flip and reveal message</p>
                     </div>
                     <div class="flip-card-back">
                         <h3 class="flip-card-title">A Special Message</h3>
                         <p class="flip-card-message">Your smile is as radiant as Rapunzel's! May your year be filled with moments that make you smile this brightly every single day.</p>
-                        <p class="flip-instruction">Click again to flip back</p>
+                        <p class="flip-instruction">Tap again to flip back</p>
                     </div>
                 </div>
             </div>
@@ -1024,14 +1224,16 @@
             <div class="flip-card" id="flipCard3">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <img src="https://i.pinimg.com/originals/8d/41/08/8d41083134fb5b87b5d0f07fb1d9ca1b.png" alt="Rapunzel Art" class="flip-card-img">
+                        <div class="flip-card-img" style="background: linear-gradient(135deg, #FFD700, #FFA500);">
+                            Message #3
+                        </div>
                         <h3 class="flip-card-title">Message #3</h3>
-                        <p class="flip-instruction">Click to flip and reveal message</p>
+                        <p class="flip-instruction">Tap to flip and reveal message</p>
                     </div>
                     <div class="flip-card-back">
                         <h3 class="flip-card-title">A Special Message</h3>
                         <p class="flip-card-message">Like this beautiful artwork, you are a masterpiece! Never forget how unique and wonderful you are. Your dreams are waiting for you to reach out and grab them!</p>
-                        <p class="flip-instruction">Click again to flip back</p>
+                        <p class="flip-instruction">Tap again to flip back</p>
                     </div>
                 </div>
             </div>
@@ -1066,9 +1268,6 @@
                     Your Secret Admirer
                 </div>
             </div>
-            
-            <!-- Add the image here -->
-            <img src="https://images5.alphacoders.com/680/thumb-1920-680452.jpg" alt="Tangled Lanterns" class="letter-image">
         </div>
         
         <!-- Virtual Hug Button -->
@@ -1096,72 +1295,60 @@
         </div>
     </div>
 
-    <!-- Hug Animation -->
-    <div class="hug-animation" id="hugAnimation">
-        <div class="hug-icon">
-            <i class="fas fa-heart"></i>
+    <!-- Virtual Hug Popup -->
+    <div class="hug-popup" id="hugPopup">
+        <div class="hug-popup-content">
+            <h2 class="hug-popup-title">Virtual Hug Sent!</h2>
+            <p class="hug-popup-subtitle">An exciting warm, tight hug has been sent your way, Vicky!</p>
+            
+            <!-- Beating Heart Animation -->
+            <div class="heart-container" id="beatingHeart">
+                <div class="heart-glow"></div>
+                <div class="beating-heart"></div>
+                <div class="heart-pulse"></div>
+                <div class="heart-pulse"></div>
+                <div class="heart-pulse"></div>
+            </div>
+            
+            <p class="hug-popup-message">
+                May you feel all the love and warmth on your special day. Just like the lanterns floating in the sky, may this hug reach you with all the affection and care meant just for you on your birthday!
+            </p>
+            
+            <hr class="hug-popup-divider">
+            
+            <p class="hug-popup-footer">
+                🤗 Sending you endless hugs on your special day! 🤗
+            </p>
+            
+            <button class="btn" id="closeHugBtn" style="margin-top: 30px;">
+                Continue to Seal Letter <i class="fas fa-arrow-right"></i>
+            </button>
         </div>
-        
-        <h2 class="hug-message">Virtual Hug Sent! 🤗</h2>
-        
-        <p style="color: white; font-size: 1.5rem; text-align: center; max-width: 600px; margin-bottom: 30px;">
-            A warm, tight hug has been sent your way, Vicky!
-            May you feel all the love and warmth on your special day.
-        </p>
-        
-        <button class="btn" id="closeHugBtn">
-            Continue to Seal Letter
-        </button>
     </div>
 
-    <!-- Final Seal Popup -->
+    <!-- Seal Popup -->
     <div class="seal-popup" id="sealPopup">
-        <div class="seal-animation">
-            <i class="fas fa-crown"></i>
+        <div class="seal-popup-content">
+            <h2 class="seal-popup-title">Birthday Surprise Sealed with Love!</h2>
+            <p class="seal-popup-subtitle">Your magical birthday adventure is complete, Vicky!</p>
+            
+            <p class="seal-popup-message">
+                May all your wishes come true and may this year be your most magical one yet. Just like Rapunzel's story, may your journey be filled with wonder, friendship, and dreams that come true in the most beautiful ways.
+            </p>
+            
+            <hr class="seal-popup-divider">
+            
+            <p class="seal-popup-footer">
+                💝 Sealed with love and best wishes! 💝
+            </p>
+            
+            <button class="btn" id="restartBtn" style="margin-top: 30px;">
+                <i class="fas fa-redo"></i> Experience Again
+            </button>
         </div>
-        
-        <h2 class="seal-message">Birthday Surprise Sealed with Love! 💝</h2>
-        
-        <p style="color: white; font-size: 1.5rem; text-align: center; max-width: 600px; margin-bottom: 30px;">
-            Your magical birthday adventure is complete, Vicky! 
-            May all your wishes come true and may this year be your most magical one yet.
-        </p>
-        
-        <button class="restart-btn" id="restartBtn">
-            <i class="fas fa-redo"></i> Experience Again
-        </button>
     </div>
 
     <script>
-        // Create floating lanterns
-        function createLanterns() {
-            const container = document.getElementById('lanterns-container');
-            const lanternCount = 25;
-            
-            for (let i = 0; i < lanternCount; i++) {
-                const lantern = document.createElement('div');
-                lantern.className = 'lantern';
-                
-                // Random position and animation
-                const startX = Math.random() * 100;
-                const duration = 20 + Math.random() * 30;
-                const delay = Math.random() * 40;
-                const size = 25 + Math.random() * 50;
-                
-                lantern.style.left = `${startX}vw`;
-                lantern.style.width = `${size}px`;
-                lantern.style.height = `${size * 1.5}px`;
-                lantern.style.animationDuration = `${duration}s`;
-                lantern.style.animationDelay = `-${delay}s`;
-                
-                // Random color variation
-                const hue = 40 + Math.random() * 40;
-                lantern.style.background = `linear-gradient(to bottom, hsl(${hue}, 100%, 70%), hsl(${hue + 20}, 100%, 80%))`;
-                
-                container.appendChild(lantern);
-            }
-        }
-
         // Page Navigation System
         const pages = document.querySelectorAll('.page');
         const prevBtn = document.getElementById('prevBtn');
@@ -1196,12 +1383,10 @@
             // Hide all pages
             pages.forEach(page => {
                 page.classList.remove('active');
-                page.style.display = 'none';
             });
             
             // Show current page
             document.getElementById(`page${currentPage}`).classList.add('active');
-            document.getElementById(`page${currentPage}`).style.display = 'flex';
             
             // Scroll to top
             window.scrollTo(0, 0);
@@ -1253,47 +1438,11 @@
             }
         });
         
-        // Function to show wish popup with confetti
+        // Function to show wish popup
         function showWishPopup() {
             const wishPopup = document.getElementById('wishPopup');
             wishPopup.classList.add('active');
             document.body.style.overflow = 'hidden';
-            
-            // Add confetti
-            for (let i = 0; i < 30; i++) {
-                createConfetti();
-            }
-            
-            // Add floating hearts
-            for (let i = 0; i < 8; i++) {
-                createFloatingHeart();
-            }
-        }
-        
-        // Function to create confetti
-        function createConfetti() {
-            const confetti = document.createElement('div');
-            confetti.className = 'wish-confetti';
-            confetti.style.left = Math.random() * 100 + 'vw';
-            confetti.style.animationDelay = Math.random() * 2 + 's';
-            
-            // Random colors
-            const colors = ['var(--pink)', 'var(--gold)', 'var(--purple)', 'var(--light-purple)', 'var(--sky-blue)'];
-            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            
-            // Random size
-            const size = 8 + Math.random() * 15;
-            confetti.style.width = size + 'px';
-            confetti.style.height = size + 'px';
-            
-            document.getElementById('wishPopup').appendChild(confetti);
-            
-            // Remove confetti after animation
-            setTimeout(() => {
-                if (confetti.parentNode) {
-                    confetti.parentNode.removeChild(confetti);
-                }
-            }, 3000);
         }
         
         // Make wish button in popup
@@ -1302,22 +1451,10 @@
             document.getElementById('wishPopup').classList.remove('active');
             document.body.style.overflow = 'auto';
             
-            // Clear all confetti
-            document.querySelectorAll('.wish-confetti').forEach(confetti => {
-                if (confetti.parentNode) {
-                    confetti.parentNode.removeChild(confetti);
-                }
-            });
-            
             // Go directly to next page (memories page)
             setTimeout(() => {
                 currentPage = 3;
                 updateNavigation();
-                
-                // Add celebration hearts
-                for (let i = 0; i < 15; i++) {
-                    setTimeout(() => createFloatingHeart(), i * 100);
-                }
             }, 300);
         });
         
@@ -1328,27 +1465,34 @@
 
         // Flip Card Interactions
         const flipCards = document.querySelectorAll('.flip-card');
+        
         flipCards.forEach(card => {
-            card.addEventListener('click', () => {
-                card.classList.toggle('flipped');
+            // Click event for desktop and mobile
+            card.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.classList.toggle('flipped');
             });
+            
+            // Touch event for mobile
+            card.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.classList.toggle('flipped');
+            }, { passive: false });
         });
 
         // Virtual Hug Button
         document.getElementById('virtualHugBtn').addEventListener('click', () => {
-            // Show hug animation
-            document.getElementById('hugAnimation').classList.add('active');
+            // Show hug popup
+            const hugPopup = document.getElementById('hugPopup');
+            hugPopup.classList.add('active');
             document.body.style.overflow = 'hidden';
-            
-            // Add floating hearts
-            for (let i = 0; i < 20; i++) {
-                setTimeout(() => createFloatingHeart(), i * 100);
-            }
         });
 
-        // Close hug animation
+        // Close hug popup
         document.getElementById('closeHugBtn').addEventListener('click', () => {
-            document.getElementById('hugAnimation').classList.remove('active');
+            // Close hug popup
+            document.getElementById('hugPopup').classList.remove('active');
             document.body.style.overflow = 'auto';
             
             // Show seal letter button
@@ -1359,13 +1503,9 @@
         // Seal letter button
         document.getElementById('sealLetterBtn').addEventListener('click', () => {
             // Show seal popup
-            document.getElementById('sealPopup').classList.add('active');
+            const sealPopup = document.getElementById('sealPopup');
+            sealPopup.classList.add('active');
             document.body.style.overflow = 'hidden';
-            
-            // Add lanterns to seal popup
-            for (let i = 0; i < 20; i++) {
-                setTimeout(() => createFloatingHeart(), i * 150);
-            }
         });
 
         // Restart button
@@ -1384,72 +1524,92 @@
             // Reset buttons on page 5
             document.getElementById('virtualHugBtn').style.display = 'none';
             document.getElementById('sealLetterBtn').style.display = 'none';
-            
-            // Add celebration hearts
-            for (let i = 0; i < 10; i++) {
-                setTimeout(() => createFloatingHeart(), i * 100);
-            }
         });
 
-        // Create floating hearts animation
+        // Beating Heart Interaction
+        document.getElementById('beatingHeart').addEventListener('click', function() {
+            // Create floating hearts
+            for (let i = 0; i < 5; i++) {
+                createFloatingHeart();
+            }
+            
+            // Play heart sound effect
+            playHeartSound();
+        });
+
         function createFloatingHeart() {
             const heart = document.createElement('div');
-            heart.innerHTML = '<i class="fas fa-heart"></i>';
-            heart.style.position = 'fixed';
-            heart.style.color = `hsl(${Math.random() * 360}, 100%, 70%)`;
-            heart.style.fontSize = (20 + Math.random() * 30) + 'px';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.top = '100vh';
-            heart.style.opacity = '0.9';
-            heart.style.zIndex = '5';
-            heart.style.pointerEvents = 'none';
-            heart.style.transition = 'all 3s ease-out';
+            heart.className = 'floating-heart';
+            heart.innerHTML = '❤️';
+            heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+            
+            // Random position at bottom
+            const startX = Math.random() * window.innerWidth;
+            heart.style.left = `${startX}px`;
+            heart.style.bottom = '0px';
+            heart.style.opacity = '1';
             
             document.body.appendChild(heart);
             
-            // Animate the heart floating up
-            setTimeout(() => {
-                heart.style.top = '-100px';
-                heart.style.transform = `rotate(${Math.random() * 360}deg)`;
-                heart.style.opacity = '0';
-            }, 10);
+            // Animate heart floating up
+            const duration = 2000 + Math.random() * 1000;
+            const endY = -100 - Math.random() * 100;
+            const endX = startX + (Math.random() * 100 - 50);
+            
+            const animation = heart.animate([
+                { transform: 'translateY(0) translateX(0)', opacity: 1 },
+                { transform: `translateY(${endY}px) translateX(${endX - startX}px)`, opacity: 0 }
+            ], {
+                duration: duration,
+                easing: 'cubic-bezier(0.25, 0.1, 0.25, 1)'
+            });
             
             // Remove heart after animation
-            setTimeout(() => {
+            animation.onfinish = () => {
                 if (heart.parentNode) {
-                    document.body.removeChild(heart);
+                    heart.parentNode.removeChild(heart);
                 }
-            }, 3100);
+            };
+        }
+
+        function playHeartSound() {
+            try {
+                // Create a simple beep sound using Web Audio API
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = 523.25; // C5
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.5);
+            } catch (e) {
+                // Sound not supported or permission not granted
+                console.log("Sound not available");
+            }
         }
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
-            createLanterns();
-            
             // Show first page
             updateNavigation();
-            
-            // Add some initial floating hearts
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => createFloatingHeart(), i * 500);
-            }
             
             // Close popups if clicking outside
             document.getElementById('wishPopup').addEventListener('click', function(e) {
                 if (e.target === this) {
                     this.classList.remove('active');
                     document.body.style.overflow = 'auto';
-                    
-                    // Clear all confetti
-                    document.querySelectorAll('.wish-confetti').forEach(confetti => {
-                        if (confetti.parentNode) {
-                            confetti.parentNode.removeChild(confetti);
-                        }
-                    });
                 }
             });
             
-            document.getElementById('hugAnimation').addEventListener('click', function(e) {
+            document.getElementById('hugPopup').addEventListener('click', function(e) {
                 if (e.target === this) {
                     this.classList.remove('active');
                     document.body.style.overflow = 'auto';
@@ -1476,16 +1636,9 @@
                 updateNavigation();
             } else if (e.key === 'Escape') {
                 document.getElementById('wishPopup').classList.remove('active');
-                document.getElementById('hugAnimation').classList.remove('active');
-                document.getElementById('sealPopup').classlist.remove('active');
+                document.getElementById('hugPopup').classList.remove('active');
+                document.getElementById('sealPopup').classList.remove('active');
                 document.body.style.overflow = 'auto';
-                
-                // Clear all confetti
-                document.querySelectorAll('.wish-confetti').forEach(confetti => {
-                    if (confetti.parentNode) {
-                        confetti.parentNode.removeChild(confetti);
-                    }
-                });
             }
         });
     </script>
